@@ -1,0 +1,69 @@
+import 'package:yumquick/features/products/data/models/product_model.dart';
+
+class userModel {
+  bool? status;
+  UserModel? user;
+
+  userModel({this.status, this.user});
+
+  userModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    user = json['user'] != null ? new UserModel.fromJson(json['user']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
+    return data;
+  }
+}
+
+class UserModel {
+  String? email;
+  List<Products>? favoriteProducts;
+  int? id;
+  String? imagePath;
+  String? name;
+  String? phone;
+
+  UserModel({
+    this.email,
+    this.favoriteProducts,
+    this.id,
+    this.imagePath,
+    this.name,
+    this.phone,
+  });
+
+  UserModel.fromJson(Map<String, dynamic> json) {
+    email = json['email'];
+    if (json['favorite_products'] != null) {
+      favoriteProducts = <Products>[];
+      json['favorite_products'].forEach((v) {
+        favoriteProducts!.add(Products.fromJson(v));
+      });
+    }
+    id = json['id'];
+    imagePath = json['image_path'];
+    name = json['name'];
+    phone = json['phone'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['email'] = this.email;
+    if (this.favoriteProducts != null) {
+      data['favorite_products'] = this.favoriteProducts!
+          .map((v) => v.toJson())
+          .toList();
+    }
+    data['id'] = this.id;
+    data['image_path'] = this.imagePath;
+    data['name'] = this.name;
+    data['phone'] = this.phone;
+    return data;
+  }
+}
